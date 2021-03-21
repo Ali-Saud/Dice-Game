@@ -28,24 +28,26 @@ roundScores,
 dice,
 playerList;
 
-function init() {   
-  //score = [0, 0, 0, 0];
+function init() {
+  score = [0, 0, 0, 0];
+  current= [0,0,0,0];
   roundScores = 0;
   playerList = [0,1,2,3];
   activePlayer = 0;
-  for (i in playerList){
+  for (var i in playerList){
       score[i] = 0;
       current[i] = 0;
+      console.log('score: '+ score[i],'current: ' +current[i]);
       //score[activePlayer] = current[activePlayer];
       //current[activePlayer] = 0.0;
       document.getElementById(`score--${activePlayer}`).textContent =
         score[i];
       playing = true;
-      
+
   };
   //current = [0,0,0,0];
-  
-  
+
+
 
 
   player0.classList.remove('player--winner');
@@ -57,7 +59,7 @@ function init() {
   player2.classList.remove('player--active');
   player3.classList.remove('player--active');
   // dice == 0;
-  
+
 }
 init();
 diceDOM.style.display = 'none';
@@ -93,7 +95,7 @@ const switchPlayer = function () {
 
       player1.classList.toggle('player--active');
       player2.classList.toggle('player--active');
-    } else 
+    } else
     if (activePlayer === 2) {
       zeroScores();
       current[activePlayer] = 0.0;
@@ -131,34 +133,34 @@ const switchPlayer = function () {
 btnRoll.addEventListener('click',function() {
   if (playing){
 
-    // 1. create a random number 
+    // 1. create a random number
     var dice = Math.floor(Math.random() * 6) + 1;
-    
+
     //2. display the result
-    
+
     // console.log(dice);
     diceDOM.style.display = 'block';
     diceDOM.src= 'dice-'+dice + '.PNG'
     // 3. update round score if the rolled number is not 1
     if (dice != 1) {
       current[activePlayer] += dice;
-      console.log(current[activePlayer], current);
+      console.log(current[activePlayer], current, 'score: '+ score[activePlayer]);
       document.querySelector('#current--' + activePlayer).textContent =
       current[activePlayer];
-      
+
       // console.log(roundScores);
-      // 
+      //
     } else {
       current[activePlayer] = 0.0;
       console.log('current after 1 shows: '+current[activePlayer]);
       document.querySelector(
         '#current--' + activePlayer
         ).textContent = current[activePlayer];
-        
+
         // console.log(scores[activePlayer]);
         switchPlayer();
       }
-      
+
     }
 });
 
@@ -195,8 +197,17 @@ btnHold.addEventListener('click', function(){
     // if > 100: Finish the game
     // else switch player
   }
-  
+
 });
 
 
-btnNew.addEventListener('click', init);
+btnNew.addEventListener('click', function(){
+  init();
+  for (var i in playerList){
+    document.querySelector('#current--' + i).textContent =
+      0;
+      document.querySelector('#score--' + i).textContent =
+        0;
+  }
+
+});
