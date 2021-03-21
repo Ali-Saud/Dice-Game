@@ -121,6 +121,7 @@ const switchPlayer = function () {
 
       player3.classList.toggle('player--active');
     }
+    dice != 1 ? diceDOM.style.display = 'none' : diceDOM.style.display = 'block';
   }
 };
 
@@ -132,15 +133,11 @@ const switchPlayer = function () {
 
 btnRoll.addEventListener('click',function() {
   if (playing){
-
     // 1. create a random number
     var dice = Math.floor(Math.random() * 6) + 1;
-
     //2. display the result
-
-    // console.log(dice);
     diceDOM.style.display = 'block';
-    diceDOM.src= 'dice-'+dice + '.PNG'
+    diceDOM.src= './dice-img/dice-'+dice + '.PNG'
     // 3. update round score if the rolled number is not 1
     if (dice != 1) {
       current[activePlayer] += dice;
@@ -148,8 +145,6 @@ btnRoll.addEventListener('click',function() {
       document.querySelector('#current--' + activePlayer).textContent =
       current[activePlayer];
 
-      // console.log(roundScores);
-      //
     } else {
       current[activePlayer] = 0.0;
       console.log('current after 1 shows: '+current[activePlayer]);
@@ -157,8 +152,8 @@ btnRoll.addEventListener('click',function() {
         '#current--' + activePlayer
         ).textContent = current[activePlayer];
 
-        // console.log(scores[activePlayer]);
         switchPlayer();
+        diceDOM.style.display = 'block';
       }
 
     }
